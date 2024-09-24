@@ -1,19 +1,19 @@
-name: "Install Backblaze b2 cli"
-description: "Github actions for installing Backblaze b2 cli on linux"
-author: sylwit
+name: "Authorize Backblaze B2 CLI"
+description: "Github actions for installing and authorizing Backblaze B2 CLI on Linux"
+author: andromidasj
 branding:
-  icon: download-cloud
+  icon: terminal
   color: red
 
 inputs:
   version:
-    description: "The b2 cli version to download (if necessary) and use. Example: 3.0.3"
+    description: "The b2 cli version to download (if necessary) and use. Example: 4.1.0"
     required: false
     default: "latest"
 
 outputs:
   version:
-    description: "The Backblaze b2 CLI version that was installed"
+    description: "The Backblaze B2 CLI version that was installed"
     value: ${{ steps.set-output.outputs.version }}
 
 runs:
