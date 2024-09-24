@@ -2,11 +2,11 @@
 
 [![test-action](https://github.com/sylwit/install-b2-cli-action/workflows/test-action/badge.svg)](https://github.com/sylwit/install-b2-cli-action/actions?query=workflow%3Atest-action)
 
-Install Backblaze b2 CLI on a GitHub Actions Linux host. This action doesn't rely on docker image so is blazing fast.
+Install and authorize Backblaze B2 CLI directly on a GitHub Actions Linux host.
 
 After this action, every step is capable of running `b2` CLI.
 
-You can set 2 environment variables (secrets) `B2_APPLICATION_KEY_ID` and `B2_APPLICATION_KEY` to authenticate your cli.
+You must set 2 environment variables (secrets) `B2_APPLICATION_KEY_ID` and `B2_APPLICATION_KEY` to authenticate your cli.
 
 ### Usage
 
@@ -14,9 +14,9 @@ Add the following step to a job in your workflow
 
 ```yaml
 - id: install-b2-cli
-  uses: sylwit/install-b2-cli-action@v1.0.0
+  uses: andromidasj/install-b2-cli-action@v1.0.0
   with:
-    version: v3.0.1     # default to latest
+    version: v4.1.0     # default to latest
   env:
     B2_APPLICATION_KEY_ID: ${{ secrets.B2_APPLICATION_KEY_ID }}
     B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
@@ -25,7 +25,7 @@ Add the following step to a job in your workflow
 ### Full example
 
 ```yaml
-name: Sync app
+name: Update CORS
 on:
   push:
 
@@ -35,19 +35,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
 
-      - uses: sylwit/install-b2-cli-action@v1.0.0
+      - uses: andromidasj/install-b2-cli-action@v1.0.0
         env:
           B2_APPLICATION_KEY_ID: ${{ secrets.B2_APPLICATION_KEY_ID }}
           B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
       ...
 
-      - name: Sync
-        run: b2 sync ./build b2://my_bucket
+      - name: Update CORS
+        run: b2 bucket update --cors-rules "$(<./b2-cors.json)" myBucket allPrivate
 ```
 
 ## Authors
 
 Created and maintained by [Sylvain Witmeyer](https://github.com/sylwit)
+Forked and updated by [Josh Andromidas](https://github.com/andromidasj)
 
 ## License
 
